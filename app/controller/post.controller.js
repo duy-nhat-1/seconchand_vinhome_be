@@ -42,3 +42,35 @@ export const createPost = async (req, res) => {
         })
     }
 }
+export const updatePost = async (req, res) => {
+    const { title, description, userId, name, price, categoryId } = req.body
+    try {
+        if (!title || !description || !userId || !name || !price || !categoryId) {
+            return res.status(400).json({
+                msg: 'Missing inputs'
+            })
+        }
+        const post = await postService.createService(req.body)
+        return res.status(200).json(post)
+    } catch (error) {
+        return res.status(500).json({
+            msg: 'Faill at auth controller: ' + error
+        })
+    }
+}
+export const deletePost = async (req, res) => {
+    const { id } = req.query
+    try {
+        if (!id) {
+            return res.status(400).json({
+                msg: 'Missing id'
+            })
+        }
+        const post = await postService.deletePostsService(id)
+        return res.status(200).json(post)
+    } catch (error) {
+        return res.status(500).json({
+            msg: 'Faill at auth controller: ' + error
+        })
+    }
+}

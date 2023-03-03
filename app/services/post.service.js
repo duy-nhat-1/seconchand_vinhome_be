@@ -1,6 +1,7 @@
 import db from '../models'
 const { Op } = require("sequelize")
 import { v4 } from 'uuid'
+import { response } from 'express'
 export const getPostsService = () => new Promise(async (resolve, reject) => {
     try {
         const response = await db.Post.findAll({
@@ -69,6 +70,31 @@ export const createService = ({ title, description, userId, name, price, categor
         resolve({
             msg: post ? 'Create post successfully !' : 'Create post error',
             msg: product ? 'Create success' : 'Create post not success'
+        })
+    } catch (error) {
+        reject(error)
+    }
+})
+export const deletePostsService = (id) => new Promise(async (resolve, reject) => {
+    try {
+        const responseProduct = await db.Product.destroy({
+            raw: true,
+            nest: true,
+            where: {
+                postId: id
+            }
+        })
+        const responsePost = await db.Post.destroy({
+            raw: true,
+            nest: true,
+            where: {
+                id
+            },
+        })
+        resolve({
+            err: responsePost ? 0 : 1,
+            msg: responseProduct ? 'Delete success Product' : 'Delete fail !!!',
+            msg: responsePost ? 'Delete success POST' : 'Delete fail !!!',
         })
     } catch (error) {
         reject(error)

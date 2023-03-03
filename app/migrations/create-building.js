@@ -11,6 +11,6 @@ module.exports = {
         });
     },
     async down(queryInterface, Sequelize) {
-        await queryInterface.dropTable('Categogy')
+        await queryInterface.dropTable('Building')
     }
 };

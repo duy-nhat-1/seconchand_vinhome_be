@@ -8,4 +8,5 @@ router.get('/limit', postController.getPostsLimit)
 //     res.send('server on...')
 router.post('/createpost', postController.createPost)
 // })
+router.delete('/deletepost', postController.deletePost)
 export default router
