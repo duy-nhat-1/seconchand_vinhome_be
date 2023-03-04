@@ -48,7 +48,7 @@ export const getPostsLimitService = (page) => new Promise(async (resolve, reject
         reject(error)
     }
 })
-export const createService = ({ title, description, userId, name, price, categoryId }) => new Promise(async (resolve, reject) => {
+export const createPostService = ({ title, description, userId, name, price, categoryId }) => new Promise(async (resolve, reject) => {
     try {
         const post = await db.Post.create({
             id: v4(),

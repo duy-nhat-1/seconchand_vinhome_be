@@ -20,3 +20,51 @@ export const getCategoriesService = () => new Promise(async (resolve, reject) =>
         reject(error)
     }
 })
+category
+export const createCategoryService = (id) => new Promise(async (resolve, reject) => {
+    try {
+        const category = await db.Category.create({
+            id,
+        })
+        resolve({
+            msg: category ? 'Create create building successfully !' : 'Create building error',
+
+        })
+    } catch (error) {
+        reject(error)
+    }
+})
+
+export const updateCategoryService = (categoryId,) => new Promise(async (resolve, reject) => {
+    try {
+        const building = await db.Building.update({name:"", atribute:""}, {
+            raw: true,
+            nest: true,
+            where: {
+                categoryId,
+            }
+        })
+        resolve({
+            msg: building == 1 ? 'Update success' : 'Not found id'
+        })
+    } catch (error) {
+        reject(error)
+    }
+})
+export const deleteCategoryService = (buildingId) => new Promise(async (resolve, reject) => {
+    try {
+
+        const building = await db.Building.destroy({
+            raw: true,
+            nest: true,
+            where: {
+                id: buildingId
+            }
+        })
+        resolve({
+            msg: building ? "Delete succes" : "Delete fail"
+        })
+    } catch (error) {
+        reject(error)
+    }
+})

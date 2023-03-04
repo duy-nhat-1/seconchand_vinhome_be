@@ -15,10 +15,6 @@ module.exports = (sequelize, DataTypes) => {
         }
     }
     Building.init({
-        fullName: DataTypes.STRING,
-        email: DataTypes.STRING,
-        phone: DataTypes.INTEGER,
-        avatar: DataTypes.STRING,
 
     }, {
         sequelize,

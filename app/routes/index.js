@@ -1,6 +1,7 @@
 import authRouter from './auth.routes'
 import postRouter from './post.routes'
 import categoryRouter from './category.routes'
+import buildingRouter from './building.routes'
 const initRoutes = (app) => {
     app.use('/api/auth', authRouter)
 
@@ -9,6 +10,7 @@ const initRoutes = (app) => {
     //     res.send('server on...')
     app.use('/api/category', categoryRouter)
     // })
+    app.use('/api/building', buildingRouter)
 }
 
 export default initRoutes

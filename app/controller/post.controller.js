@@ -34,7 +34,7 @@ export const createPost = async (req, res) => {
                 msg: 'Missing inputs'
             })
         }
-        const post = await postService.createService(req.body)
+        const post = await postService.createPostService(req.body)
         return res.status(200).json(post)
     } catch (error) {
         return res.status(500).json({
@@ -50,7 +50,7 @@ export const updatePost = async (req, res) => {
                 msg: 'Missing inputs'
             })
         }
-        const post = await postService.createService(req.body)
+        const post = await postService.createPostService(req.body)
         return res.status(200).json(post)
     } catch (error) {
         return res.status(500).json({
