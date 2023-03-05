@@ -22,7 +22,7 @@ export const verifyToken = (req, res, next) => {
 }
 export const isAdmin = ((req, res, next) => {
     const { role } = req.user
-    if (role == 'admin')
+    if (role !== 'admin')
         return res.status(401).json({
             success: false,
             mes: ' REQUIRE ADMIN ROLE'

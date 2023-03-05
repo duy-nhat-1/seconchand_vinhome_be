@@ -8,7 +8,7 @@ const initRoutes = (app) => {
     app.use('/api/post', postRouter)
     // return app.use('/', (req, res) => {
     //     res.send('server on...')
-    app.use('/api/category', categoryRouter)
+    // app.use('/api/category', categoryRouter)
     // })
     app.use('/api/building', buildingRouter)
 }

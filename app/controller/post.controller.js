@@ -14,9 +14,10 @@ export const getPostsLimit = async (req, res) => {
         })
     }
 }
-export const getPosts = async (req, res) => {
+export const getPostbyId = async (req, res) => {
     try {
-        const response = await postService.getPostsService()
+        const { id } = req.params
+        const response = await postService.getPostbyIdService(id)
         return res.status(200).json(response)
 
     } catch (error) {
@@ -27,9 +28,10 @@ export const getPosts = async (req, res) => {
     }
 }
 export const createPost = async (req, res) => {
-    const { title, description, userId, name, price, categoryId } = req.body
+    const { title, description, userId, productName, price, categoryId, imgIds } = req.body
+    console.log(req.body);
     try {
-        if (!title || !description || !userId || !name || !price || !categoryId) {
+        if (!title || !description || !userId || !productName || !price || !categoryId || !imgIds) {
             return res.status(400).json({
                 msg: 'Missing inputs'
             })
@@ -54,12 +56,12 @@ export const updatePost = async (req, res) => {
         return res.status(200).json(post)
     } catch (error) {
         return res.status(500).json({
-            msg: 'Faill at auth controller: ' + error
+            msg: 'Faill at posst controller: ' + error
         })
     }
 }
 export const deletePost = async (req, res) => {
-    const { id } = req.query
+    const { id } = req.params
     try {
         if (!id) {
             return res.status(400).json({

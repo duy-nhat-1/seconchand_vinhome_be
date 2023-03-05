@@ -5,7 +5,7 @@ const app = express()
 import initRoutes from './app/routes'
 import cookieParser from 'cookie-parser'
 const swaggerUi = require('swagger-ui-express')
-const swaggerFile = require('../swagger-output.json')
+const swaggerFile = require('./swagger-output.json')
 app.use(cors({
     origin: process.env.CLIENT_URL,
     methods: ["POST", "GET", "PUT", "DELETE"]

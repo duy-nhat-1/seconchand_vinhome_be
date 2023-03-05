@@ -1,16 +1,18 @@
 import db from '../models'
 const { Op } = require("sequelize")
 import { v4 } from 'uuid'
-import { response } from 'express'
-export const getPostsService = () => new Promise(async (resolve, reject) => {
+export const getPostbyIdService = (id) => new Promise(async (resolve, reject) => {
     try {
-        const response = await db.Post.findAll({
+        const response = await db.Post.findOne({
 
             raw: true,
             nest: true,
+            where: {
+                id,
+            },
             include: [
-                // { model: db.Img, as: 'img', attributes: ['imgId'] },
-                { model: db.Product, as: 'product', attributes: ['name', 'price', 'status'] },
+                { model: db.Img, as: 'img', attributes: ['id'] },
+                { model: db.Product, as: 'product', attributes: ['productName', 'price', 'status'] },
                 // { model: db.Category, as: 'category', attributes: ['name', 'atribute',] },
             ],
             attributes: ['id', 'title', 'like', 'description']
@@ -48,7 +50,7 @@ export const getPostsLimitService = (page) => new Promise(async (resolve, reject
         reject(error)
     }
 })
-export const createPostService = ({ title, description, userId, name, price, categoryId }) => new Promise(async (resolve, reject) => {
+export const createPostService = ({ title, description, userId, productName, price, categoryId, imgIds }) => new Promise(async (resolve, reject) => {
     try {
         const post = await db.Post.create({
             id: v4(),
@@ -57,17 +59,22 @@ export const createPostService = ({ title, description, userId, name, price, cat
             like: false,
             userId,
         })
-        // console.log(post);
         const product = await db.Product.create({
             id: v4(),
-            name,
+            productName,
             price,
             status: true,
             categoryId,
             postId: post.id
 
         })
+
+        const img = await db.Img.bulkCreate(
+            imgIds.map(img => (
+                { id: img.Id, postId: post.id }
+            )));
         resolve({
+            msg: img ? 'Create success' : 'Create faill',
             msg: post ? 'Create post successfully !' : 'Create post error',
             msg: product ? 'Create success' : 'Create post not success'
         })
@@ -89,6 +96,13 @@ export const deletePostsService = (id) => new Promise(async (resolve, reject) =>
             nest: true,
             where: {
                 id
+            },
+        })
+        const responseImg = await db.Img.destroy({
+            raw: true,
+            nest: true,
+            where: {
+                postId: id
             },
         })
         resolve({
