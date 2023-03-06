@@ -35,7 +35,7 @@ export const getPostsLimitService = (page) => new Promise(async (resolve, reject
             limit: +process.env.LIMIT,
             include: [
                 // { model: db.Imgs, as: 'img', attributes: ['imgId'] },
-                { model: db.Product, as: 'product', attributes: ['name', 'price', 'status'] },
+                { model: db.Product, as: 'product', attributes: ['productName', 'price', 'status'] },
                 // { model: db.Category, as: 'category', attributes: ['name', 'atribute',] },
             ],
             attributes: ['id', 'title', 'like', 'description']
