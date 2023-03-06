@@ -15,8 +15,10 @@ app.use(cookieParser())
 import connectDB from './app/config/connectDB'
 app.use(express.urlencoded({ extended: true }))
 app.use('/doc', swaggerUi.serve, swaggerUi.setup(swaggerFile))
-const port = process.env.port || 8987
-
+const port = process.env.PORT || 8987
+app.get("/", (req, res) => {
+    res.json({ message: "Wellcome to app" });
+});
 const listener = app.listen(port, () => {
     console.log(`Server is runing on port ${listener.address().port}`);
 })
