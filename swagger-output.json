@@ -125,7 +125,7 @@
                                     "items": {
                                         "type": "object",
                                         "properties": {
-                                            "Id": {
+                                            "url": {
                                                 "type": "string",
                                                 "description": "The ID of the image",
                                                 "example": "https://example.com/image10.jpg"

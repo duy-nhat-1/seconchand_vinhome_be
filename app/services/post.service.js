@@ -71,7 +71,7 @@ export const createPostService = ({ title, description, userId, productName, pri
 
         const img = await db.Img.bulkCreate(
             imgIds.map(img => (
-                { id: img.Id, postId: post.id }
+                { id: v4(), url: img.url, postId: post.id }
             )));
         resolve({
             msg: img ? 'Create success' : 'Create faill',
