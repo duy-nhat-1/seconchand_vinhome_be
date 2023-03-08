@@ -21,7 +21,6 @@ export const login = async (req, res) => {
 
     try {
         const tokenId = req.body.token.split(" ")[1];
-        // console.log(tokenId);
         if (!tokenId) {
             return res.status(400).json({
                 err: 1,
@@ -32,7 +31,6 @@ export const login = async (req, res) => {
         const email = decodeValue.email;
         const response = await authService.loginService(email)
         res.cookie('refreshToken', response.refreshToken, { httpOnly: true, expiresIn: 864000 })
-        console.log(response.refreshToken);
         return res.status(200).json(response)
     } catch (error) {
         return res.status(500).json({

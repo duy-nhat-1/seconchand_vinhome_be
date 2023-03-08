@@ -3,6 +3,7 @@ import { v4 } from 'uuid'
 import { raw } from 'mysql2'
 require('dotenv').config()
 import jwt from 'jsonwebtoken'
+import { setRedis } from '../config/redisConfig'
 
 
 export const registerService = ({ fullName, email, phone, avatar }) => new Promise(async (resolve, reject) => {
@@ -36,9 +37,10 @@ export const loginService = async (email) => {
             },
             raw: true
         });
-        const acesstoken = jwt.sign({ id: user.id, fullName: user.fullName, email: user.email }, process.env.SECRET, {
-            expiresIn: 86400,
-        })
+        const redis = await setRedis(`user-${user.id}`, JSON.stringify(user))
+        console.log(redis);
+        const acesstoken = jwt.sign({ id: user.id, fullName: user.fullName, email: user.email }, process.env.SECRET,
+            { expiresIn: '2d' })
         const refreshToken = jwt.sign({ id: user.id }, process.env.SECRET, {
             expiresIn: 864000,
         })
@@ -49,6 +51,7 @@ export const loginService = async (email) => {
             returning: true,
             plain: true
         })
+
         return { acesstoken, refreshToken }
     } catch (error) {
         throw new Error(error)

@@ -205,6 +205,89 @@
                     }
                 }
             }
+        },
+        "/api/auth/login": {
+            "post": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Logs in user with Firebase ID token",
+                "description": "This endpoint verifies the Firebase ID token provided in the request body, and logs in the user associated with the email address in the ID token payload.",
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "token",
+                        "description": "Firebase ID token as a string",
+                        "required": false,
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "token": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "User logged in successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "token": {
+                                            "type": "string",
+                                            "description": "Access token to be used in subsequent requests"
+                                        },
+                                        "refreshToken": {
+                                            "type": "string",
+                                            "description": "Refresh token to be used to get a new access token after it expires"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid token from Firebase",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "err": {
+                                            "type": "number"
+                                        },
+                                        "msg": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "err": {
+                                            "type": "number"
+                                        },
+                                        "msg": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
     },
     "securityDefinitions": {
