@@ -7,9 +7,9 @@ export const getCurrent = async (req, res) => {
         console.time();
         const userRidis = await getRedis(`user-${id}`)
         const user = JSON.parse(userRidis)
-            const response = await UserService.getUserService(id)
+        const response = await UserService.getUserService(id)
         console.timeEnd();
-        return res.status(200).json(user)
+        return res.status(200).json(response)
     } catch (error) {
         return res.status(500).json({
             err: -1,
