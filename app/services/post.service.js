@@ -13,7 +13,7 @@ export const getPostbyIdService = (id) => new Promise(async (resolve, reject) =>
             include: [
                 { model: db.Img, as: 'img', attributes: ['id'] },
                 { model: db.Product, as: 'product', attributes: ['productName', 'price', 'status'] },
-                // { model: db.Category, as: 'category', attributes: ['name', 'atribute',] },
+                { model: db.Category, as: 'category', attributes: ['name', 'attribute',] },
             ],
             attributes: ['id', 'title', 'like', 'description']
         })
@@ -34,9 +34,13 @@ export const getPostsLimitService = (page) => new Promise(async (resolve, reject
             offset: page * (+process.env.LIMIT) || 0,
             limit: +process.env.LIMIT,
             include: [
-                // { model: db.Imgs, as: 'img', attributes: ['imgId'] },
-                { model: db.Product, as: 'product', attributes: ['productName', 'price', 'status'] },
-                // { model: db.Category, as: 'category', attributes: ['name', 'atribute',] },
+                { model: db.Img, as: 'img', attributes: ['url'] },
+                {
+                    model: db.Product, as: 'product', attributes: ['productName', 'price', 'status'], include: [
+                        { model: db.Category, as: 'category', attributes: ['categoryName', 'attribute',] }
+                    ]
+                },
+
             ],
             attributes: ['id', 'title', 'like', 'description']
         })
@@ -109,6 +113,31 @@ export const deletePostsService = (id) => new Promise(async (resolve, reject) =>
             err: responsePost ? 0 : 1,
             msg: responseProduct ? 'Delete success Product' : 'Delete fail !!!',
             msg: responsePost ? 'Delete success POST' : 'Delete fail !!!',
+        })
+    } catch (error) {
+        reject(error)
+    }
+})
+export const getAllPostService = () => new Promise(async (resolve, reject) => {
+    try {
+        const post = await db.Post.findAll({
+            raw: true,
+            nest: true,
+            include: [
+                { model: db.Img, as: 'img', attributes: ['url'] },
+                {
+                    model: db.Product, as: 'product', attributes: ['productName', 'price', 'status'], include: [
+                        { model: db.Category, as: 'category', attributes: ['categoryName', 'attribute',] }
+                    ]
+                },
+
+            ],
+            attributes: ['id', 'title', 'like', 'description']
+        })
+
+        resolve({
+            msg: post ? 'Get all post' : 'Get all post',
+            post
         })
     } catch (error) {
         reject(error)

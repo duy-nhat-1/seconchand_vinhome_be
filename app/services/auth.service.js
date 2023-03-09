@@ -39,7 +39,7 @@ export const loginService = async (email) => {
         });
         const redis = await setRedis(`user-${user.id}`, JSON.stringify(user))
         console.log(redis);
-        const acesstoken = jwt.sign({ id: user.id, fullName: user.fullName, email: user.email }, process.env.SECRET,
+        const acesstoken = jwt.sign({ id: user.id, fullName: user.fullName, email: user.email, roleId: user.roleId }, process.env.SECRET,
             { expiresIn: '2d' })
         const refreshToken = jwt.sign({ id: user.id }, process.env.SECRET, {
             expiresIn: 864000,
