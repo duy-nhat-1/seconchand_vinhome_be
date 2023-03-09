@@ -28,7 +28,7 @@ export const registerService = ({ fullName, email, phone, avatar }) => new Promi
         reject(error)
     }
 })
-export const loginService = async (email) => {
+export const loginService = async (email, fullName, avatar) => {
     try {
 
         const user = await db.Users.findOne({
@@ -37,8 +37,18 @@ export const loginService = async (email) => {
             },
             raw: true
         });
+        if (!user) {
+            const user = await db.Users.create({
+                id: v4(),
+                fullName: fullName,
+                email: email,
+                phone: "",
+                avatar: avatar,
+                roleId: "user",
+                buildingId: ""
+            });
+        }
         const redis = await setRedis(`user-${user.id}`, JSON.stringify(user))
-        console.log(redis);
         const acesstoken = jwt.sign({ id: user.id, fullName: user.fullName, email: user.email, roleId: user.roleId }, process.env.SECRET,
             { expiresIn: '2d' })
         const refreshToken = jwt.sign({ id: user.id }, process.env.SECRET, {

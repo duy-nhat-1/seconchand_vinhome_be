@@ -29,7 +29,9 @@ export const login = async (req, res) => {
         }
         const decodeValue = await admin.auth().verifyIdToken(tokenId);
         const email = decodeValue.email;
-        const response = await authService.loginService(email)
+        const fullName = decodeValue.name;
+        const avatar = decodeValue.picture;
+        const response = await authService.loginService(email, fullName, avatar)
         res.cookie('refreshToken', response.refreshToken, { httpOnly: true, expiresIn: 864000 })
         return res.status(200).json(response)
     } catch (error) {
