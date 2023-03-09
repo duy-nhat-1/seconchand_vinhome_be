@@ -1,7 +1,6 @@
 import jwt from 'jsonwebtoken'
 require('dotenv').config
 export const verifyToken = (req, res, next) => {
-
     const accessToken = req.headers.authorization?.split(' ')[1]
     console.log(accessToken);
     if (!accessToken) return res.status(401).json({

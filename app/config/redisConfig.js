@@ -1,7 +1,10 @@
 import Redis from 'ioredis'
 import { promisify } from 'util'
-const redisClient = new Redis();
-
+require('dotenv').config()
+const redisClient = new Redis(process.env.REDIS_URL);
+redisClient.on('connect', () => {
+    console.log('Redis client connected with URL');
+})
 const getRedis = (value) => {
     const syncRedisGet = promisify(redisClient.get).bind(redisClient);
     return syncRedisGet(value)

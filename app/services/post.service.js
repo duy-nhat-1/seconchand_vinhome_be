@@ -26,6 +26,7 @@ export const getPostbyIdService = (id) => new Promise(async (resolve, reject) =>
         reject(error)
     }
 })
+
 export const getPostsLimitService = (page) => new Promise(async (resolve, reject) => {
     try {
         const response = await db.Post.findAndCountAll({
