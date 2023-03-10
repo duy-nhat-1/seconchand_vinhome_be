@@ -5,7 +5,7 @@ const router = express.Router()
 
 router.post('/create', verifyTokenmiddlewares.verifyToken, verifyTokenmiddlewares.isAdmin, buildingController.createBuilding)
 
-router.get('/getall', verifyTokenmiddlewares.verifyToken, verifyTokenmiddlewares.isAdmin, buildingController.getBuilding)
+router.get('/', verifyTokenmiddlewares.verifyToken, verifyTokenmiddlewares.isAdmin, buildingController.getBuilding)
 
 router.put('/update', verifyTokenmiddlewares.verifyToken, verifyTokenmiddlewares.isAdmin, buildingController.updateBuilding)
 router.delete('/delete', verifyTokenmiddlewares.verifyToken, verifyTokenmiddlewares.isAdmin, buildingController.deleteBuilding)

@@ -13,6 +13,7 @@ const initRoutes = (app) => {
     // })
     app.use('/api/building', buildingRouter)
     app.use('/api/user', userRouter)
+    app.use('/api/category', categoryRouter)
 }
 
 export default initRoutes

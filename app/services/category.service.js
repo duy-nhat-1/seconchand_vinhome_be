@@ -2,7 +2,7 @@ import { v4 } from "uuid"
 import db from "../models"
 export const getCategoriesService = () => new Promise(async (resolve, reject) => {
     try {
-        const response = await db.Categories.findAll({
+        const response = await db.Category.findAll({
             raw: true,
             nest: true,
 
@@ -19,7 +19,7 @@ export const getCategoriesService = () => new Promise(async (resolve, reject) =>
 })
 export const createCategoryService = (categoryName, attribute) => new Promise(async (resolve, reject) => {
     try {
-        const category = await db.Categories.create({
+        const category = await db.Category.create({
             id: v4(),
             categoryName,
             attribute
@@ -33,17 +33,20 @@ export const createCategoryService = (categoryName, attribute) => new Promise(as
     }
 })
 
-export const updateCategoryService = (categoryId, categoryName, attribute) => new Promise(async (resolve, reject) => {
+export const updateCategoryService = (id, categoryName, attribute) => new Promise(async (resolve, reject) => {
+    console.log(categoryName);
+    console.log(attribute);
     try {
         const category = await db.Category.update({ categoryName: categoryName, attribute: attribute }, {
             raw: true,
             nest: true,
             where: {
-                categoryId,
+                id: id,
             }
         })
+        console.log(category);
         resolve({
-            msg: category == 1 ? 'Update success' : 'Not found id'
+            msg: category ? 'Update success' : 'Not found id'
         })
     } catch (error) {
         reject(error)

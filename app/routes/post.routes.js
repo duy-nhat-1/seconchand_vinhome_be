@@ -4,11 +4,11 @@ import * as verifyTokenmiddlewares from '../middlewares/verifyToken'
 const router = express.Router()
 
 router.get('/limit', postController.getPostsLimit)
-router.get('/getall', postController.getAllPost)
+router.get('/', postController.getAllPost)
 router.get('/:id', postController.getPostbyId)
 // router.get('/abc', (req, res) => {
 //     res.send('server on...')
-router.post('/createpost', postController.createPost)
+router.post('/create', postController.createPost)
 // })
-router.delete('/deletepost/:id', postController.deletePost)
+router.delete('/delete/:id', postController.deletePost)
 export default router
