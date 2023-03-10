@@ -11,9 +11,13 @@ export const getPostbyIdService = (id) => new Promise(async (resolve, reject) =>
                 id,
             },
             include: [
-                { model: db.Img, as: 'img', attributes: ['id'] },
-                { model: db.Product, as: 'product', attributes: ['productName', 'price', 'status'] },
-                { model: db.Category, as: 'category', attributes: ['name', 'attribute',] },
+                { model: db.Img, as: 'img', attributes: ['url'] },
+                {
+                    model: db.Product, as: 'product', attributes: ['productName', 'price', 'status'], include: [
+                        { model: db.Category, as: 'category', attributes: ['categoryName', 'attribute',] }
+                    ]
+                },
+
             ],
             attributes: ['id', 'title', 'like', 'description']
         })
@@ -135,7 +139,7 @@ export const getAllPostService = () => new Promise(async (resolve, reject) => {
             ],
             attributes: ['id', 'title', 'like', 'description']
         })
-
+        const redis = await setRedis(`post-${post.id}`, JSON.stringify(post))
         resolve({
             msg: post ? 'Get all post' : 'Get all post',
             post
