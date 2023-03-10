@@ -1,6 +1,7 @@
 import db from '../models'
 const { Op } = require("sequelize")
 import { v4 } from 'uuid'
+import { setRedis } from '../config/redisConfig'
 export const getPostbyIdService = (id) => new Promise(async (resolve, reject) => {
     try {
         const response = await db.Post.findOne({
