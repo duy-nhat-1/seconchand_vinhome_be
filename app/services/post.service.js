@@ -6,7 +6,7 @@ export const getPostbyIdService = (id) => new Promise(async (resolve, reject) =>
     try {
         const response = await db.Post.findOne({
 
-            raw: true,
+           
             nest: true,
             where: {
                 id,
@@ -35,7 +35,7 @@ export const getPostbyIdService = (id) => new Promise(async (resolve, reject) =>
 export const getPostsLimitService = (page) => new Promise(async (resolve, reject) => {
     try {
         const response = await db.Post.findAndCountAll({
-            raw: true,
+    
             nest: true,
             offset: page * (+process.env.LIMIT) || 0,
             limit: +process.env.LIMIT,
