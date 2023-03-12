@@ -127,10 +127,10 @@ export const deletePostsService = (id) => new Promise(async (resolve, reject) =>
 export const getAllPostService = () => new Promise(async (resolve, reject) => {
     try {
         const post = await db.Post.findAll({
-            raw: true,
+            // raw: true,
             nest: true,
             include: [
-                { model: db.Img, as: 'img', attributes: ['url'] },
+                { model: db.Img, as: 'img', attributes: ['url',] },
                 {
                     model: db.Product, as: 'product', attributes: ['productName', 'price', 'status'], include: [
                         { model: db.Category, as: 'category', attributes: ['categoryName', 'attribute',] }
@@ -138,7 +138,8 @@ export const getAllPostService = () => new Promise(async (resolve, reject) => {
                 },
 
             ],
-            attributes: ['id', 'title', 'like', 'description']
+            attributes: ['id', 'title', 'like', 'description', 'userId']
+
         })
         const redis = await setRedis(`post-${post.id}`, JSON.stringify(post))
         resolve({

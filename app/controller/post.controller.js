@@ -30,7 +30,6 @@ export const getPostbyId = async (req, res) => {
 export const getAllPost = async (req, res) => {
     try {
         const response = await postService.getAllPostService()
-        console.log(response);
         return res.status(200).json(response)
 
     } catch (error) {
