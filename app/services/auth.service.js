@@ -42,10 +42,10 @@ export const loginService = async (email, fullName, avatar) => {
                 id: v4(),
                 fullName: fullName,
                 email: email,
-                phone: "",
+                phone: "Chu co",
                 avatar: avatar,
                 roleId: "user",
-                buildingId: null
+
             });
         }
         const redis = await setRedis(`user-${user.id}`, JSON.stringify(user))
