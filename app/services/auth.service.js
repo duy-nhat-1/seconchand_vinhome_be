@@ -45,7 +45,7 @@ export const loginService = async (email, fullName, avatar) => {
                 phone: "",
                 avatar: avatar,
                 roleId: "user",
-                buildingId: ""
+                buildingId: null
             });
         }
         const redis = await setRedis(`user-${user.id}`, JSON.stringify(user))
