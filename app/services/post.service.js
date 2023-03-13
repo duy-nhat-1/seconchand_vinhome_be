@@ -150,3 +150,11 @@ export const getAllPostService = () => new Promise(async (resolve, reject) => {
         reject(error)
     }
 })
+
+export const interestedPostService = async (value) => {
+    try {
+        const post = await db.Post.update()
+    } catch (error) {
+        throw new Error(error)
+    }
+}
