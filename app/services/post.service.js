@@ -2,6 +2,9 @@ import db from '../models'
 const { Op } = require("sequelize")
 import { v4 } from 'uuid'
 import { setRedis } from '../config/redisConfig'
+const admin = require('../config/firebase.config')
+
+
 export const getPostbyIdService = (id) => new Promise(async (resolve, reject) => {
     try {
         const response = await db.Post.findOne({
@@ -151,9 +154,37 @@ export const getAllPostService = () => new Promise(async (resolve, reject) => {
     }
 })
 
-export const interestedPostService = async (value) => {
+export const interestedPostService = async (value, postId) => {
     try {
-        const post = await db.Post.update()
+        if (value === true) {
+            const post = await db.Post.update({ like: value }, {
+                where: {
+                    id: postId
+                }
+            })
+            if (post) {
+                try {
+                    const message = {
+                        notification: {
+                            title: "Test Nofi",
+                            body: "This is a message"
+                        },
+                        data: {
+                            orderId: 12345,
+                            orderData: "22-02-2022"
+                        }
+                    };
+                    const options = {priority: 'high', timeToLive: 60 * 60 * 24};
+                 
+                } catch (error) {
+                    throw new Error(error)
+                }
+            }
+
+
+        }
+
+
     } catch (error) {
         throw new Error(error)
     }

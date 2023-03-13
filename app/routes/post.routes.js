@@ -11,4 +11,5 @@ router.get('/:id', postController.getPostbyId)
 router.post('/create', postController.createPost)
 // })
 router.delete('/delete/:id', postController.deletePost)
+router.put('/interested/:postId', postController.interestedPost)
 export default router

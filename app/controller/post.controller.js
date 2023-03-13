@@ -89,3 +89,20 @@ export const deletePost = async (req, res) => {
     }
 }
 
+export const interestedPost = async (req, res) => {
+    const { value, } = req.body
+    const { postId } = req.params
+    try {
+        if (!value || !postId) {
+            return res.status(400).json({
+                msg: 'Missing inputs'
+            })
+        }
+        const post = await postService.interestedPostService(value, postId)
+        return res.status(200).json(post)
+    } catch (error) {
+        return res.status(500).json({
+            msg: 'Faill at posst controller: ' + error
+        })
+    }
+}
