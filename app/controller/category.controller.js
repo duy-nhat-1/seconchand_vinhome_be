@@ -14,7 +14,9 @@ export const getCategories = async (req, res) => {
 export const createCategories = async (req, res) => {
     try {
         const { categoryName, attribute } = req.body
+        console.log(categoryName);
         const response = await categoryService.createCategoryService(categoryName, attribute)
+
         return res.status(200).json(response)
 
     } catch (error) {
